@@ -1,0 +1,83 @@
+{% extends 'library_app/base.html' %}
+{% block content %}
+
+<style>
+/* Wrapper */
+.delete-wrapper {
+    max-width: 520px;
+    margin: 40px auto;
+}
+
+/* Card */
+.delete-card {
+    border-radius: 16px;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.1);
+}
+
+/* Title */
+.delete-title {
+    font-weight: 600;
+    text-align: center;
+    letter-spacing: 0.3px;
+}
+
+/* Book info */
+.book-info p {
+    margin-bottom: 6px;
+    font-size: 15px;
+}
+
+/* Warning box */
+.warning-box {
+    background: rgba(220, 53, 69, 0.08);
+    border-left: 4px solid #dc3545;
+    padding: 12px 14px;
+    border-radius: 8px;
+    margin: 16px 0;
+}
+
+/* Buttons */
+.btn-danger,
+.btn-secondary {
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+</style>
+
+<div class="delete-wrapper">
+
+  <h3 class="mb-4 text-danger delete-title">Delete Book</h3>
+
+  <div class="card p-4 delete-card">
+
+    <div class="book-info">
+      <p><strong>Title:</strong> {{ book.title }}</p>
+      <p><strong>Author:</strong> {{ book.author }}</p>
+      <p><strong>Available Copies:</strong> {{ book.available }}</p>
+    </div>
+
+    <div class="warning-box">
+      <strong>Warning:</strong> This action is permanent and cannot be undone.
+    </div>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <div class="d-flex gap-2 mt-3">
+            <button type="submit" class="btn btn-danger">
+                Yes, Delete
+            </button>
+            <a href="{% url 'book_list' %}" class="btn btn-secondary">
+                Cancel
+            </a>
+        </div>
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

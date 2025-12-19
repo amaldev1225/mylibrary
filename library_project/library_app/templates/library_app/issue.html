@@ -1,0 +1,101 @@
+{% extends 'library_app/base.html' %}
+{% block content %}
+
+<style>
+/* Wrapper */
+.issue-wrapper {
+    max-width: 540px;
+    margin: 40px auto;
+}
+
+/* Card */
+.issue-card {
+    border-radius: 16px;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.issue-title {
+    font-weight: 600;
+    text-align: center;
+    color: #2c3e50;
+    letter-spacing: 0.3px;
+}
+
+/* Book info box */
+.book-box {
+    background: #f8f9fb;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 16px;
+}
+
+.book-box h4 {
+    margin-bottom: 4px;
+    font-weight: 600;
+}
+
+/* Input */
+.form-control {
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 15px;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.15);
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary {
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+</style>
+
+<div class="issue-wrapper">
+
+  <h2 class="mb-4 issue-title">Issue Book</h2>
+
+  <div class="card p-4 issue-card">
+
+      <div class="book-box">
+          <h4>{{ book.title }}</h4>
+          <p class="text-muted mb-1">Author: {{ book.author }}</p>
+          <p class="mb-0"><strong>Available:</strong> {{ book.available }}</p>
+      </div>
+
+      <form method="post">
+          {% csrf_token %}
+
+          <div class="mb-3">
+              <label class="form-label">Member Card Number</label>
+              <input 
+                  type="text" 
+                  name="card_number" 
+                  class="form-control" 
+                  placeholder="Enter member card number" 
+                  required
+              >
+          </div>
+
+          <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-primary">
+                  Issue Book
+              </button>
+              <a href="{% url 'book_list' %}" class="btn btn-secondary">
+                  Cancel
+              </a>
+          </div>
+      </form>
+
+  </div>
+
+</div>
+
+{% endblock %}
