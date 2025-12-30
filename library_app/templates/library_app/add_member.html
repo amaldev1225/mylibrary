@@ -1,0 +1,96 @@
+{% extends 'library_app/base.html' %}
+{% block content %}
+
+<style>
+
+.member-form-wrapper {
+    max-width: 480px;
+    margin: 40px auto;
+}
+
+
+.member-card {
+    border-radius: 14px;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.08);
+}
+
+
+.member-title  {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(90deg, #e81c1c, #4a1fd8);
+    padding: 12px 22px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+}
+
+
+.form-label {
+    font-weight: 500;
+    color: #34495e;
+}
+
+
+.form-control {
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 15px;
+    border: 1px solid #dcdde1;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.15);
+}
+
+
+.btn-primary,
+.btn-secondary {
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+}
+</style>
+
+<div class="member-form-wrapper">
+
+  <h3 class="mb-4 member-title">Add New Member</h3>
+
+  <div class="card p-4 member-card">
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label class="form-label">Full Name</label>
+        <input 
+          type="text" 
+          name="full_name" 
+          class="form-control" 
+          placeholder="Enter member's full name" 
+          required
+        >
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Add Member</button>
+        <a href="{% url 'members_list' %}" class="btn btn-secondary">Back</a>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

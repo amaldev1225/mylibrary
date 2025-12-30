@@ -1,0 +1,100 @@
+{% extends 'library_app/base.html' %}
+{% block content %}
+
+<style>
+/* Wrapper */
+.edit-wrapper {
+    max-width: 520px;
+    margin: 40px auto;
+}
+
+/* Card */
+.edit-card {
+    border-radius: 16px;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 14px 40px rgba(0,0,0,0.08);
+}
+
+/* Title */
+.edit-title {
+    font-weight: 600;
+    text-align: center;
+    color: #2c3e50;
+    letter-spacing: 0.3px;
+}
+
+/* Inputs */
+.form-control {
+    border-radius: 10px;
+    padding: 11px 14px;
+    font-size: 15px;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.15);
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary {
+    padding: 10px 22px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+</style>
+
+<div class="edit-wrapper">
+
+  <h3 class="mb-4 edit-title">Edit Book</h3>
+
+  <div class="card p-4 edit-card">
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          name="title" 
+          value="{{ book.title }}" 
+          required
+        >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Author</label>
+        <input 
+          type="text" 
+          class="form-control" 
+          name="author" 
+          value="{{ book.author }}" 
+          required
+        >
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input 
+          type="number" 
+          class="form-control" 
+          name="quantity" 
+          min="1" 
+          value="{{ book.quantity }}" 
+          required
+        >
+      </div>
+
+      <div class="d-flex gap-2 mt-3">
+        <button class="btn btn-primary">Save Changes</button>
+        <a href="{% url 'book_list' %}" class="btn btn-secondary">Cancel</a>
+      </div>
+
+    </form>
+  </div>
+
+</div>
+
+{% endblock %}

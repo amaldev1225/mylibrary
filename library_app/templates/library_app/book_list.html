@@ -1,0 +1,108 @@
+{% extends 'library_app/base.html' %}
+{% block content %}
+
+<style>
+
+.page-title {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(90deg, #e81c1c, #4a1fd8);
+    padding: 12px 22px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+}
+
+
+
+
+.books-card {
+    border-radius: 16px;
+    border: none;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+}
+
+
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    font-size: 14px;
+    letter-spacing: 0.4px;
+    text-transform: uppercase;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+
+.action-btn {
+    border-radius: 8px;
+    padding: 4px 10px;
+    font-size: 13px;
+}
+
+
+.no-copies {
+    font-weight: 500;
+}
+
+
+.add-book-btn {
+    margin-top: 8px;
+    display: inline-block;
+}
+</style>
+
+<h2 class="page-title"> 📚 Available Books
+</h2>
+
+<div class="card p-3 books-card">
+
+<table class="table table-striped align-middle">
+    <thead class="table-dark">
+        <tr>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Available</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+
+    <tbody>
+    {% for book in books %}
+        <tr>
+            <td>{{ book.title }}</td>
+            <td>{{ book.author }}</td>
+            <td>{{ book.available }}</td>
+
+           <td>
+  {% if book.available > 0 %}
+    <a href="{% url 'issue_book' book.id %}" class="btn btn-primary btn-sm">Issue</a>
+  {% else %}
+    <span class="badge bg-danger me-2">Out of Stock</span>
+    <a href="{% url 'add_stock' book.id %}" class="btn btn-success btn-sm">
+      + Add Stock
+    </a>
+    <a href="{% url 'delete_book' book.id %}" 
+                       class="btn btn-danger btn-sm action-btn ms-2">
+                        Delete
+                    </a>
+
+  {% endif %}
+</td>
+
+
+                    
+                    
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,195 @@
+{% extends 'library_app/base.html' %}
+{% block content %}
+
+<style>
+/* Page title */
+.search-title { font-size: 32px; font-weight: 700; color: #ffffff; background: linear-gradient(90deg, #e81c1c, #4a1fd8); padding: 12px 22px; border-radius: 10px; margin-bottom: 24px; }
+
+/* Cards */
+.search-card {
+    border-radius: 16px;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 12px 35px rgba(0,0,0,0.08);
+}
+
+/* Section titles */
+.section-title {
+    font-weight: 600;
+    color: #34495e;
+    margin-bottom: 12px;
+}
+
+/* Forms */
+.form-control {
+    border-radius: 10px;
+    padding: 10px 14px;
+}
+
+.btn-primary,
+.btn-warning {
+    border-radius: 10px;
+    padding: 6px 14px;
+    font-size: 14px;
+}
+
+/* Tables */
+.table {
+    margin-bottom: 0;
+}
+
+.table thead th {
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.table tbody td {
+    vertical-align: middle;
+    font-size: 15px;
+}
+
+/* Fine */
+.fine {
+    font-weight: 600;
+    color: #dc3545;
+}
+
+/* Outstanding */
+.outstanding-box {
+    background: rgba(220, 53, 69, 0.08);
+    border-left: 4px solid #dc3545;
+    padding: 14px 16px;
+    border-radius: 10px;
+}
+</style>
+
+<h3 class="mb-4 search-title">Search Member by Card Number</h3>
+
+<!-- Search -->
+<div class="card p-4 mb-4 search-card">
+  <form method="post" class="row g-3 align-items-end">
+    {% csrf_token %}
+
+    <div class="col-md-4">
+      <label class="form-label">Card Number</label>
+      <input 
+        name="card_number" 
+        class="form-control" 
+        placeholder="e.g. 516898" 
+        required
+      >
+    </div>
+
+    <div class="col-auto">
+      <button class="btn btn-primary">
+        Search
+      </button>
+    </div>
+  </form>
+</div>
+
+{% if profile %}
+
+<!-- Member Details -->
+<div class="card p-4 mb-4 search-card">
+  <h5 class="section-title">Member Details</h5>
+  <p class="mb-0">
+    <strong>Name:</strong> {{ profile.full_name }}<br>
+    <strong>Card Number:</strong> {{ profile.card_number }}
+  </p>
+</div>
+
+<!-- Active Issues -->
+<div class="card p-4 mb-4 search-card">
+  <h5 class="section-title">
+    Currently Issued Books ({{ active_issues|length }})
+  </h5>
+
+  {% if active_issues %}
+    <table class="table table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Book</th>
+          <th>Issued</th>
+          <th>Due</th>
+          <th>Fine</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for i in active_issues %}
+        <tr>
+          <td>{{ i.book.title }}</td>
+          <td>{{ i.issue_date }}</td>
+          <td>{{ i.due_date }}</td>
+          <td>
+            {% if i.current_fine > 0 %}
+              <span class="fine">₹{{ i.current_fine }}</span>
+            {% else %}
+              ₹0
+            {% endif %}
+          </td>
+          <td>
+            <a 
+              class="btn btn-sm btn-warning" 
+              href="{% url 'return_book' i.id %}">
+              Return
+            </a>
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="text-muted mb-0">No active issued books.</p>
+  {% endif %}
+</div>
+
+<!-- History -->
+<div class="card p-4 mb-4 search-card">
+  <h5 class="section-title">Returned Books History</h5>
+
+  {% if history %}
+    <table class="table table-striped align-middle">
+      <thead class="table-dark">
+        <tr>
+          <th>Book</th>
+          <th>Issued</th>
+          <th>Returned</th>
+          <th>Fine</th>
+        </tr>
+      </thead>
+      <tbody>
+      {% for h in history %}
+        <tr>
+          <td>{{ h.book.title }}</td>
+          <td>{{ h.issue_date }}</td>
+          <td>{{ h.return_date }}</td>
+          <td>
+            {% if h.fine_amount > 0 %}
+              <span class="fine">₹{{ h.fine_amount }}</span>
+            {% else %}
+              ₹0
+            {% endif %}
+          </td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}
+    <p class="text-muted mb-0">No returned records.</p>
+  {% endif %}
+</div>
+
+<!-- Outstanding -->
+<div class="outstanding-box mb-4">
+  <h5 class="mb-0">
+    Total Outstanding Fine:
+    <span class="fine">₹{{ total_outstanding }}</span>
+  </h5>
+</div>
+
+{% endif %}
+
+{% endblock %}

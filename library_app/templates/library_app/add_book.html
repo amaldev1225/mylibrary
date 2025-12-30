@@ -1,0 +1,103 @@
+{% extends 'library_app/base.html' %}
+{% block content %}
+
+<style>
+
+.book-form-wrapper {
+    max-width: 520px;
+    margin: 40px auto;
+}
+
+
+.book-card {
+    border-radius: 14px;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+
+.book-title  {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(90deg, #e81c1c, #4a1fd8);
+    padding: 12px 22px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #34495e;
+}
+
+
+.form-control {
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 15px;
+    border: 1px solid #dcdde1;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.15);
+}
+
+
+.btn-primary {
+    padding: 10px 24px;
+    border-radius: 10px;
+    font-weight: 500;
+}
+
+.btn-secondary {
+    padding: 10px 24px;
+    border-radius: 10px;
+}
+
+/* Button spacing */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 12px;
+}
+</style>
+
+<div class="book-form-wrapper">
+
+  <h3 class="mb-4 book-title">Add New Book</h3>
+
+  <div class="card p-4 book-card">
+
+    <form method="post">
+      {% csrf_token %}
+
+      <div class="mb-3">
+        <label class="form-label">Title</label>
+        <input type="text" name="title" class="form-control" placeholder="Book Title" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Author</label>
+        <input type="text" name="author" class="form-control" placeholder="Author Name" required>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Quantity</label>
+        <input type="number" name="quantity" class="form-control" min="1" value="1" required>
+      </div>
+
+      <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Add Book</button>
+        <a href="{% url 'book_list' %}" class="btn btn-secondary">Cancel</a>
+      </div>
+
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

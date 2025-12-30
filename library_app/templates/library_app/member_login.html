@@ -1,0 +1,79 @@
+{% extends 'library_app/base.html' %}
+{% block content %}
+
+<style>
+/* Center wrapper */
+.member-login-wrapper {
+    min-height: 75vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Card */
+.member-login-card {
+    max-width: 380px;
+    width: 100%;
+    border-radius: 18px;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 18px 45px rgba(0,0,0,0.1);
+    padding: 28px 26px;
+}
+
+/* Title */
+.member-login-title {
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    color: #2c3e50;
+}
+
+/* Input */
+.form-control {
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 15px;
+}
+
+.form-control:focus {
+    border-color: #0d6efd;
+    box-shadow: 0 0 0 0.15rem rgba(13, 110, 253, 0.15);
+}
+
+/* Button */
+.btn-primary {
+    padding: 12px;
+    border-radius: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+</style>
+
+<div class="member-login-wrapper">
+
+  <div class="card member-login-card">
+
+    <h4 class="text-center mb-4 member-login-title">
+      Member Login
+    </h4>
+
+    <form method="post">
+        {% csrf_token %}
+
+        <input 
+          class="form-control mb-4" 
+          name="card_number" 
+          placeholder="Enter Card Number" 
+          required
+        >
+
+        <button class="btn btn-primary w-100">
+          Login
+        </button>
+    </form>
+
+  </div>
+
+</div>
+
+{% endblock %}

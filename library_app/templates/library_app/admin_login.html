@@ -1,0 +1,86 @@
+{% extends 'library_app/base_public.html' %}
+
+{% block content %}
+
+<style>
+
+.login-wrapper {
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.login-card {
+    width: 100%;
+    max-width: 380px;
+    border-radius: 16px;
+    border: none;
+    background: #ffffff;
+    box-shadow: 0 18px 45px rgba(0, 0, 0, 0.12);
+}
+
+
+.login-title  {
+    font-size: 32px;
+    font-weight: 700;
+    color: #ffffff;
+    background: linear-gradient(90deg, #e81c1c, #4a1fd8);
+    padding: 12px 22px;
+    border-radius: 10px;
+    margin-bottom: 24px;
+}
+
+
+.form-control {
+    border-radius: 12px;
+    padding: 12px 14px;
+    font-size: 15px;
+    border: 1px solid #dcdde1;
+}
+
+.form-control:focus {
+    border-color: #212529;
+    box-shadow: 0 0 0 0.15rem rgba(33, 37, 41, 0.2);
+}
+
+
+.btn-dark {
+    border-radius: 12px;
+    padding: 12px;
+    font-weight: 500;
+    letter-spacing: 0.3px;
+}
+</style>
+
+<div class="login-wrapper">
+    <div class="card p-4 login-card">
+
+        <h3 class="text-center mb-4 login-title">Admin Login</h3>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <input 
+                class="form-control mb-3" 
+                name="username" 
+                placeholder="Admin Username" 
+                required
+            >
+
+            <input 
+                type="password" 
+                class="form-control mb-4" 
+                name="password" 
+                placeholder="Password" 
+                required
+            >
+
+            <button class="btn btn-dark w-100">Login</button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}
